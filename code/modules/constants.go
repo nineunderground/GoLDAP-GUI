@@ -26,4 +26,4 @@ var AllAttr = []string{"*"}
 
 // GUI VALUES
 
-const MainWindowTitle = "LDAP Browser Editor v0.1"
+const MainWindowTitle = "LDAP Browser (ReadOnly) v0.1"
