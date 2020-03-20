@@ -1,12 +1,13 @@
-package api
+package main
 
 import (
 	"crypto/tls"
 	"fmt"
 
-	ldap "github.com/go-ldap/ldap/v3"
+	"github.com/go-ldap/ldap"
 )
 
+// Connect ...
 func Connect(mode string) *ldap.Conn {
 	if mode == ModeNonTLS {
 		ldapServer := LdapProtocol + "://" + Hostname + ":" + LdapPort
@@ -24,6 +25,7 @@ func Connect(mode string) *ldap.Conn {
 	return nil
 }
 
+// ConnectUnsecureDialURL ...
 func ConnectUnsecureDialURL(ldapServer string) *ldap.Conn {
 	l, err := ldap.DialURL(ldapServer)
 	if err != nil {
@@ -33,6 +35,7 @@ func ConnectUnsecureDialURL(ldapServer string) *ldap.Conn {
 	return l
 }
 
+// ConnectSecureDialURL ...
 func ConnectSecureDialURL(ldapsServer string) *ldap.Conn {
 	l, err := ldap.DialURL(ldapsServer, ldap.DialWithTLSConfig(&tls.Config{InsecureSkipVerify: true}))
 	if err != nil {
@@ -42,6 +45,7 @@ func ConnectSecureDialURL(ldapsServer string) *ldap.Conn {
 	return l
 }
 
+// ConnectStartTLS ...
 func ConnectStartTLS(ldapServer string) *ldap.Conn {
 	l, err := ldap.DialURL(ldapServer)
 	if err != nil {
@@ -55,6 +59,7 @@ func ConnectStartTLS(ldapServer string) *ldap.Conn {
 	return l
 }
 
+// Bind ...
 func Bind(l *ldap.Conn, user string, pass string) bool {
 	fmt.Println("Bind...")
 	err := l.Bind(user, pass)
@@ -64,12 +69,14 @@ func Bind(l *ldap.Conn, user string, pass string) bool {
 	return true
 }
 
+// Close ...
 func Close(l *ldap.Conn) bool {
 	fmt.Println("Close...")
 	l.Close()
 	return true
 }
 
+// Search ...
 func Search(l *ldap.Conn, filter []string, attributes []string) []*ldap.Entry {
 	searchRequest := ldap.NewSearchRequest(
 		LdapBaseDN,
@@ -88,31 +95,31 @@ func Search(l *ldap.Conn, filter []string, attributes []string) []*ldap.Entry {
 
 // ************************************************************
 
-func SearchStartTLS() {
+// func SearchStartTLS() {
 
-}
+// }
 
-func SearcWithPaging() {
-	fmt.Println("SearcWithPaging...")
-}
+// func SearcWithPaging() {
+// 	fmt.Println("SearcWithPaging...")
+// }
 
-func Filter() {
-	fmt.Println("Filter...")
-}
+// func Filter() {
+// 	fmt.Println("Filter...")
+// }
 
-// NOTE: Admin actions not implemented
-func Modify() {
-	fmt.Println("Modify...")
-}
+// // NOTE: Admin actions not implemented
+// func Modify() {
+// 	fmt.Println("Modify...")
+// }
 
-func Add() {
-	fmt.Println("Add...")
-}
+// func Add() {
+// 	fmt.Println("Add...")
+// }
 
-func Delete() {
-	fmt.Println("Delete...")
-}
+// func Delete() {
+// 	fmt.Println("Delete...")
+// }
 
-func ModifyDN() {
-	fmt.Println("ModifyDN...")
-}
+// func ModifyDN() {
+// 	fmt.Println("ModifyDN...")
+// }

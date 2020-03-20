@@ -16,3 +16,5 @@
 
 # Ignore hidden OSX files
 *.DS_Store
+
+*session.profiles
